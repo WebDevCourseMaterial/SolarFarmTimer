@@ -37,9 +37,9 @@ class MainHandler(webapp2.RequestHandler):
     def post(self):
         new_score = SunScore(parent=_PARENT_KEY,
                                team=self.request.get('team'),
-                               sun_average_during_run=self.request.get('sun_average_during_run'),
-                               final_sun_power=self.request.get('final_sun_power'),
-                               sun_score=self.request.get('sun_score'))
+                               sun_average_during_run=float(self.request.get('sun_average_during_run')),
+                               final_sun_power=float(self.request.get('final_sun_power')),
+                               sun_score=float(self.request.get('sun_score')))
         new_score.put()
         self.redirect(self.request.referer)
 

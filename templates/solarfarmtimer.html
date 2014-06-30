@@ -1,0 +1,538 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description"
+	content="Web app to score Solar Farm mirror adjustments">
+<meta name="author" content="Dave Fisher">
+<title>Solar Timer</title>
+<link rel="stylesheet"
+	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+<link href="/static/stylesheets/dashboard.css" rel="stylesheet">
+<style>
+select {
+	font-family: arial, sans-serif;
+	font-size: 18pt;
+	font-weight: bold;
+}
+
+#total-suns-label {
+	text-align: right;
+}
+
+.timer-controls {
+	text-align: center;
+}
+
+@font-face {
+	font-family: 'digi';
+	src:
+		url('http://cssdeck.com/uploads/resources/fonts/digii/DS-DIGII.TTF');
+}
+
+#timer {
+	width: 250px;
+	height: 140px;
+	display: inline-block;
+	margin: 0 50px;
+	vertical-align: middle;
+	color: #707070;
+	font-family: 'digi';
+	font-size: 8em;
+	background: #B9B7B1;
+	background-image: radial-gradient(center 0, white, #B9B7B1);
+	border-top: 5px solid #E54B6B;
+	background-image: linear-gradient(#f0f0f0, white);
+}
+
+#start-button,#reset-button {
+	margin-bottom: 12px;
+}
+
+td {
+	text-align: center;
+}
+
+.panel-body .panel-body {
+	text-align: center;
+	font-size: 18px;
+}
+
+#post-result {
+	display: none;
+	float: right;
+}
+
+.power {
+	background: lightcyan;
+}
+
+input[readonly] {
+	margin-left: 40px;
+	width: 100px;
+	text-align: center;
+	float: right;
+}
+
+.sun-score-input-group {
+	overflow: hidden;
+	margin: 10px;
+}
+</style>
+</head>
+<body>
+	<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target=".navbar-collapse">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand"
+					href="https://sites.google.com/site/keencatapult2014/">KEEN
+					Catapult 2014</a>
+			</div>
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav navbar-right">
+					<li><a
+						href="https://plus.google.com/photos/117847479253027335974/albums/6029973623895781201">Images</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-xs-12 main">
+				<h1 class="col-md-7 page-header">Solar Farm Timer</h1>
+				<h1 id="total-suns-label" class="col-md-5 page-header">0 Suns</h1>
+				<div class="row placeholders">
+					<div class="col-md-3 col-sm-6 placeholder">
+						<div style="position: relative; left: 0; top: 0;">
+							<img
+								src="http://www.clipartbest.com/cliparts/aTe/Lby/aTeLbyaT4.gif"
+								width="200px" height="200px" class="img-responsive" alt="sun">
+							<img id="pie-cover-1" src="/static/images/pie0_00.png"
+								style="position: absolute; left: 50%; margin-left: -100px"
+								width="200px" height="200px" class="img-responsive"
+								alt="pie cover">
+						</div>
+						<h4>Mirror 1</h4>
+						<select name="mirror-1">
+							<option value="0">0.00 Suns</option>
+							<option value="0.05">0.05 Suns</option>
+							<option value="0.1">0.10 Suns</option>
+							<option value="0.2">0.20 Suns</option>
+							<option value="0.4">0.40 Suns</option>
+							<option value="0.7">0.70 Suns</option>
+							<option value="0.8">0.80 Suns</option>
+							<option value="0.9">0.90 Suns</option>
+							<option value="1.0">1.00 Suns</option>
+						</select>
+					</div>
+					<div class="col-md-3 col-sm-6 placeholder">
+						<div style="position: relative; left: 0; top: 0;">
+							<img
+								src="http://www.clipartbest.com/cliparts/aTe/Lby/aTeLbyaT4.gif"
+								width="200px" height="200px" class="img-responsive" alt="sun">
+							<img id="pie-cover-2" src="/static/images/pie0_00.png"
+								style="position: absolute; left: 50%; margin-left: -100px"
+								width="200px" height="200px" class="img-responsive"
+								alt="pie cover">
+						</div>
+						<h4>Mirror 2</h4>
+						<select name="mirror-2">
+							<option value="0">0.00 Suns</option>
+							<option value="0.05">0.05 Suns</option>
+							<option value="0.1">0.10 Suns</option>
+							<option value="0.2">0.20 Suns</option>
+							<option value="0.4">0.40 Suns</option>
+							<option value="0.7">0.70 Suns</option>
+							<option value="0.8">0.80 Suns</option>
+							<option value="0.9">0.90 Suns</option>
+							<option value="1.0">1.00 Suns</option>
+						</select>
+					</div>
+					<div class="col-md-3 col-sm-6 placeholder">
+						<div style="position: relative; left: 0; top: 0;">
+							<img
+								src="http://www.clipartbest.com/cliparts/aTe/Lby/aTeLbyaT4.gif"
+								width="200px" height="200px" class="img-responsive" alt="sun">
+							<img id="pie-cover-3" src="/static/images/pie0_00.png"
+								style="position: absolute; left: 50%; margin-left: -100px"
+								width="200px" height="200px" class="img-responsive"
+								alt="pie cover">
+						</div>
+						<h4>Mirror 3</h4>
+						<select name="mirror-3">
+							<option value="0">0.00 Suns</option>
+							<option value="0.05">0.05 Suns</option>
+							<option value="0.1">0.10 Suns</option>
+							<option value="0.2">0.20 Suns</option>
+							<option value="0.4">0.40 Suns</option>
+							<option value="0.7">0.70 Suns</option>
+							<option value="0.8">0.80 Suns</option>
+							<option value="0.9">0.90 Suns</option>
+							<option value="1.0">1.00 Suns</option>
+						</select>
+					</div>
+					<div class="col-md-3 col-sm-6 placeholder">
+						<div style="position: relative; left: 0; top: 0;">
+							<img
+								src="http://www.clipartbest.com/cliparts/aTe/Lby/aTeLbyaT4.gif"
+								width="200px" height="200px" class="img-responsive" alt="sun">
+							<img id="pie-cover-4" src="/static/images/pie0_00.png"
+								style="position: absolute; left: 50%; margin-left: -100px"
+								width="200px" height="200px" class="img-responsive"
+								alt="pie cover">
+						</div>
+						<h4>Mirror 4</h4>
+						<select name="mirror-4">
+							<option value="0">0.00 Suns</option>
+							<option value="0.05">0.05 Suns</option>
+							<option value="0.1">0.10 Suns</option>
+							<option value="0.2">0.20 Suns</option>
+							<option value="0.4">0.40 Suns</option>
+							<option value="0.7">0.70 Suns</option>
+							<option value="0.8">0.80 Suns</option>
+							<option value="0.9">0.90 Suns</option>
+							<option value="1.0">1.00 Suns</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="jumbotron row main">
+			<div class="col-xs-12 timer-controls">
+				<button id="start-button" type="button"
+					class="btn btn-lg btn-success">Start</button>
+				<span id="timer">3:00</span>
+				<button id="reset-button" type="button"
+					class="btn btn-lg btn-danger">Reset</button>
+			</div>
+		</div>
+		<div class="row main">
+			<div class="col-xs-4">
+
+				<div class="panel panel-default">
+					<!-- Default panel contents -->
+					<div class="panel-heading">Raw Data</div>
+					<table class="table raw-data">
+						<thead>
+							<tr>
+								<td>Time</td>
+								<td>Suns</td>
+								<td>Sun Seconds</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>3:00</td>
+								<td>0</td>
+								<td>0</td>
+							</tr>
+
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="col-xs-4">
+				<div id="final-score-panel" style="display: none;"
+					class="panel panel-primary">
+					<div class="panel-heading">
+						<h3 class="panel-title">Final Score</h3>
+					</div>
+					<div class="panel-body">
+						<div>Total Sun Seconds:</div>
+						<div class="panel panel-default">
+							<div id="total-sun-seconds" class="panel-body">0.000 Sun
+								Seconds</div>
+						</div>
+						<div>Average Sun Power:</div>
+						<div class="panel panel-default">
+							<div id="sun-score" class="panel-body power">0.000 Suns</div>
+						</div>
+					</div>
+				</div>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">During Match Stats</h3>
+					</div>
+					<div class="panel-body">
+						<div>Sun Seconds:</div>
+						<div class="panel panel-default">
+							<div id="during-match-sun-seconds" class="panel-body">0.000
+								Sun Seconds</div>
+						</div>
+						<div>Average Sun Power:</div>
+						<div class="panel panel-default">
+							<div id="during-match-sun-power" class="panel-body power">0.000
+								Suns</div>
+						</div>
+					</div>
+				</div>
+				<div id="bonus-panel" style="display: none;"
+					class="panel panel-warning">
+					<div class="panel-heading">
+						<h3 class="panel-title">Post Match Bonus</h3>
+					</div>
+					<div class="panel-body">
+						<div>Final Sun Power:</div>
+						<div class="panel panel-default">
+							<div id="final-sun-power" class="panel-body power">0.000
+								Suns</div>
+						</div>
+						<div>An additional minute would make:</div>
+						<div class="panel panel-default">
+							<div id="bonus-sun-seconds" class="panel-body">0.000 Sun
+								Seconds</div>
+						</div>
+					</div>
+				</div>
+				<button id="post-result" type="button"
+					class="btn btn-lg btn-success">Post Result</button>
+
+			</div>
+			<div class="during-match col-xs-4">
+
+				<div class="panel panel-default">
+					<!-- Default panel contents -->
+					<div class="panel-heading">Posted Sun Scores</div>
+
+
+					<!-- Table -->
+					<table class="table">
+						<thead>
+							<tr>
+								<td>Team</td>
+								<td>During</td>
+								<td>Ending</td>
+								<td>Total</td>
+							</tr>
+						</thead>
+						{% for sunscore in sunscores %}
+						<tr>
+							<td>{{sunscore.team}}</td>
+							<td>{{sunscore.sun_average_during_run}}</td>
+							<td>{{sunscore.final_sun_power}}</td>
+							<td>{{sunscore.sun_score}}</td>
+						</tr>
+						{% endfor %}
+					</table>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+
+	<!-- Modal -->
+	<div id='post-game-modal' class="modal fade" tabindex="-1"
+		role="dialog" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title">Post your Sun Score!</h4>
+				</div>
+				<form action="" method="POST">
+					<div class="modal-body">
+						<div>Add your team number for the post:</div>
+						<div class="input-group" style="margin-left: 10px;">
+							<span class="input-group-addon">Team: </span> <input name="team"
+								type="text" class="form-control" placeholder="Team 2" autofocus>
+						</div>
+						<br> <br>
+						<div style="margin: 0 40px;">
+							<div class="sun-score-input-group">
+								During match Average Sun Power: <input
+									name="sun_average_during_run" type="text" class="form-control" readonly>
+							</div>
+							<div class="sun-score-input-group">
+								Sun Power at the end of the match: <input name="final_sun_power"
+									type="text" class="form-control" readonly>
+							</div>
+							<div class="sun-score-input-group">
+								Total Sun Scores: <input name="sun_score" type="text"
+									class="form-control" readonly>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Don't
+							Post</button>
+						<button type="submit" class="btn btn-primary">Post Score</button>
+					</div>
+				</form>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
+
+
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script
+		src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	<script>
+		var secondsRemaining;
+		var timerInterval;
+		var sunSeconds;
+
+		function startTimer() {
+			resetTimer();
+			timerInterval = setInterval(function() {
+				timerTick()
+			}, 1000);
+		}
+
+		function resetTimer() {
+			secondsRemaining = 180;  // Change this time for testing.
+			sunSeconds = 0.0;
+			clearInterval(timerInterval);
+		}
+
+		function timerTick() {
+			secondsRemaining--;
+			sunSeconds += totalSuns();
+			updateTimerValue();
+			addRawDataRow();
+			updateAverage();
+			if (secondsRemaining == 0) {
+				clearInterval(timerInterval);
+				roundComplete();
+			}
+		}
+
+		function updateAverage() {
+			$("#during-match-sun-seconds").html(
+					sunSeconds.toFixed(1) + " Suns Seconds");
+			var average = sunSeconds / (180 - secondsRemaining);
+			$("#during-match-sun-power").html(average.toFixed(3) + " Suns");
+		}
+
+		function addRawDataRow() {
+			$("table.raw-data tr:last").after(
+					"<tr><td>" + timeStr() + "</td><td>"
+							+ totalSuns().toFixed(2) + "</td><td>"
+							+ sunSeconds.toFixed(1) + "</td></tr>");
+		}
+
+		var pad = function(x) {
+			return x < 10 ? '0' + x : x;
+		};
+
+		timeStr = function() {
+			return Math.floor(secondsRemaining / 60) + ":"
+					+ pad(secondsRemaining % 60);
+		}
+
+		function updateTimerValue() {
+			$("#timer").html(timeStr());
+		}
+
+		var mirrorSuns = [ 0, 0, 0, 0 ];
+		getImageForPercentage = function(showPercentage) {
+			if (showPercentage > 0.9) {
+				return "/static/images/pie1_00.png";
+			} else if (showPercentage > 0.8) {
+				return "/static/images/pie0_90.png";
+			} else if (showPercentage > 0.7) {
+				return "/static/images/pie0_80.png";
+			} else if (showPercentage > 0.4) {
+				return "/static/images/pie0_70.png";
+			} else if (showPercentage > 0.2) {
+				return "/static/images/pie0_40.png";
+			} else if (showPercentage > 0.1) {
+				return "/static/images/pie0_20.png";
+			} else if (showPercentage > 0.05) {
+				return "/static/images/pie0_10.png";
+			} else if (showPercentage > 0) {
+				return "/static/images/pie0_05.png";
+			} else {
+				return "/static/images/pie0_00.png";
+			}
+		}
+
+		totalSuns = function() {
+			var sunTotal = 0;
+			$.each(mirrorSuns, function() {
+				sunTotal += this;
+			});
+			return sunTotal;
+		}
+
+		updateTotalSuns = function() {
+			$("#total-suns-label").html(totalSuns().toFixed(2) + " Suns");
+		}
+
+		setSunCover = function(mirrorNumber, showPercentage) {
+			var pieCover = $('#pie-cover-' + mirrorNumber);
+			var imageSrc = getImageForPercentage(showPercentage);
+			pieCover.attr('src', imageSrc);
+			updateTotalSuns();
+		};
+
+		roundComplete = function() {
+			$("#bonus-panel").show();
+			$("#final-score-panel").show();
+			$("#post-result").show();
+
+			$("#final-sun-power").html(totalSuns().toFixed(2) + " Suns");
+			$("#bonus-sun-seconds").html( (totalSuns() * 60.0).toFixed(1) + " Sun Seconds");
+
+			totalSunSeconds = sunSeconds + (totalSuns() * 60.0);
+			$("#total-sun-seconds").html(totalSunSeconds.toFixed(1) + " Sun Seconds");
+			$("#sun-score").html((totalSunSeconds / 240.0).toFixed(3) + " Suns");
+
+			$("input[name=sun_average_during_run]").val((sunSeconds / 180.0).toFixed(3));
+			$("input[name=final_sun_power]").val((totalSuns()).toFixed(2));
+			$("input[name=sun_score]").val((totalSunSeconds / 240.0).toFixed(3));
+		}
+
+		$(document).ready(function() {
+			$("select[name=mirror-1]").change(function() {
+				var selectedValue = $('select[name=mirror-1] :selected').val();
+				mirrorSuns[0] = parseFloat(selectedValue);
+				setSunCover(1, selectedValue);
+			});
+			$("select[name=mirror-2]").change(function() {
+				var selectedValue = $('select[name=mirror-2] :selected').val();
+				mirrorSuns[1] = parseFloat(selectedValue);
+				setSunCover(2, selectedValue);
+			});
+			$("select[name=mirror-3]").change(function() {
+				var selectedValue = $('select[name=mirror-3] :selected').val();
+				mirrorSuns[2] = parseFloat(selectedValue);
+				setSunCover(3, selectedValue);
+			});
+			$("select[name=mirror-4]").change(function() {
+				var selectedValue = $('select[name=mirror-4] :selected').val();
+				mirrorSuns[3] = parseFloat(selectedValue);
+				setSunCover(4, selectedValue);
+			});
+			$("#start-button").click(function() {
+				//$("#post-game-modal").modal("show");
+				startTimer();
+			});
+			$("#reset-button").click(function() {
+				location.reload(true);
+			});
+			$("#post-result").click(function() {
+				$("#post-game-modal").modal("show");
+			});
+		});
+	</script>
+</body>
+</html>
