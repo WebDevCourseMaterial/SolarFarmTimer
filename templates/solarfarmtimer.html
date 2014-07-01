@@ -351,15 +351,15 @@ input[readonly] {
 						<br> <br>
 						<div style="margin: 0 40px;">
 							<div class="sun-score-input-group">
-								During match Average Sun Power: <input
+								During match average sun power: <input
 									name="sun_average_during_run" type="text" class="form-control" readonly>
 							</div>
 							<div class="sun-score-input-group">
-								Sun Power at the end of the match: <input name="final_sun_power"
+								Sun power at the end of the match: <input name="final_sun_power"
 									type="text" class="form-control" readonly>
 							</div>
 							<div class="sun-score-input-group">
-								Total Sun Scores: <input name="sun_score" type="text"
+								Total Sun Score: <input name="sun_score" type="text"
 									class="form-control" readonly>
 							</div>
 						</div>
@@ -389,12 +389,20 @@ input[readonly] {
 		var secondsRemaining;
 		var timerInterval;
 		var sunSeconds;
+		var state = 0;  // 0=no running, 1=normal speed, 2=turbo mode
 
 		function startTimer() {
 			resetTimer();
 			timerInterval = setInterval(function() {
 				timerTick()
 			}, 1000);
+		}
+
+		function startTurboTimer() {
+			clearInterval(timerInterval);
+			timerInterval = setInterval(function() {
+				timerTick()
+			}, 10);
 		}
 
 		function resetTimer() {
@@ -485,6 +493,7 @@ input[readonly] {
 		};
 
 		roundComplete = function() {
+			$("#start-button").hide();
 			$("#bonus-panel").show();
 			$("#final-score-panel").show();
 			$("#post-result").show();
@@ -523,8 +532,15 @@ input[readonly] {
 				setSunCover(4, selectedValue);
 			});
 			$("#start-button").click(function() {
-				//$("#post-game-modal").modal("show");
-				startTimer();
+				if (state == 0) {
+					state = 1;
+					startTimer();
+					$(this).html("Misson Complete");
+				} else if (state == 1) {
+					state = 2;
+					$(this).hide();
+					startTurboTimer();
+				}
 			});
 			$("#reset-button").click(function() {
 				location.reload(true);
