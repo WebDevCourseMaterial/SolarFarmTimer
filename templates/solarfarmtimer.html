@@ -7,11 +7,16 @@
 	content="Web app to score Solar Farm mirror adjustments">
 <meta name="author" content="Dave Fisher">
 <title>Solar Timer</title>
-<link rel="stylesheet"
-	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-<link href="/static/stylesheets/dashboard.css" rel="stylesheet">
+<!-- <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+ -->
+
+
+
+  <link rel="stylesheet" href="/static/stylesheets/bootstrap.min.css">
+ <link rel="stylesheet" href="/static/stylesheets/bootstrap-theme.min.css">
+
+ <link href="/static/stylesheets/dashboard.css" rel="stylesheet">
 <style>
 select {
 	font-family: arial, sans-serif;
@@ -29,8 +34,8 @@ select {
 
 @font-face {
 	font-family: 'digi';
-	src:
-		url('http://cssdeck.com/uploads/resources/fonts/digii/DS-DIGII.TTF');
+	src: url('/static/fonts/DS-DIGII.TTF');
+  /* src: url('http://cssdeck.com/uploads/resources/fonts/digii/DS-DIGII.TTF'); */
 }
 
 #timer {
@@ -93,14 +98,12 @@ input[readonly] {
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand"
-					href="https://sites.google.com/site/keencatapult2014/">KEEN
+				<a class="navbar-brand" href="https://sites.google.com/site/keencatapult2014/">KEEN
 					Catapult 2014</a>
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav navbar-right">
-					<li><a
-						href="https://plus.google.com/photos/117847479253027335974/albums/6029973623895781201">Images</a></li>
+					<li><a href="https://plus.google.com/photos/117847479253027335974/albums/6029973623895781201">Images</a></li>
 				</ul>
 			</div>
 		</div>
@@ -115,7 +118,7 @@ input[readonly] {
 					<div class="col-md-3 col-sm-6 placeholder">
 						<div style="position: relative; left: 0; top: 0;">
 							<img
-								src="http://www.clipartbest.com/cliparts/aTe/Lby/aTeLbyaT4.gif"
+								src="/static/images/sun.gif"
 								width="200px" height="200px" class="img-responsive" alt="sun">
 							<img id="pie-cover-1" src="/static/images/pie0_00.png"
 								style="position: absolute; left: 50%; margin-left: -100px"
@@ -138,7 +141,7 @@ input[readonly] {
 					<div class="col-md-3 col-sm-6 placeholder">
 						<div style="position: relative; left: 0; top: 0;">
 							<img
-								src="http://www.clipartbest.com/cliparts/aTe/Lby/aTeLbyaT4.gif"
+								src="/static/images/sun.gif"
 								width="200px" height="200px" class="img-responsive" alt="sun">
 							<img id="pie-cover-2" src="/static/images/pie0_00.png"
 								style="position: absolute; left: 50%; margin-left: -100px"
@@ -161,7 +164,7 @@ input[readonly] {
 					<div class="col-md-3 col-sm-6 placeholder">
 						<div style="position: relative; left: 0; top: 0;">
 							<img
-								src="http://www.clipartbest.com/cliparts/aTe/Lby/aTeLbyaT4.gif"
+								src="/static/images/sun.gif"
 								width="200px" height="200px" class="img-responsive" alt="sun">
 							<img id="pie-cover-3" src="/static/images/pie0_00.png"
 								style="position: absolute; left: 50%; margin-left: -100px"
@@ -184,7 +187,7 @@ input[readonly] {
 					<div class="col-md-3 col-sm-6 placeholder">
 						<div style="position: relative; left: 0; top: 0;">
 							<img
-								src="http://www.clipartbest.com/cliparts/aTe/Lby/aTeLbyaT4.gif"
+								src="/static/images/sun.gif"
 								width="200px" height="200px" class="img-responsive" alt="sun">
 							<img id="pie-cover-4" src="/static/images/pie0_00.png"
 								style="position: absolute; left: 50%; margin-left: -100px"
@@ -381,10 +384,10 @@ input[readonly] {
 	<!-- Bootstrap core JavaScript
     ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-	<script
-		src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<!-- 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> -->
+  <script src="/static/js/jquery.min.js"></script>
+  <script src="/static/js/bootstrap.min.js"></script>
 	<script>
 		var secondsRemaining;
 		var timerInterval;
